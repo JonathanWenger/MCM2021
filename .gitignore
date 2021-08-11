@@ -35,10 +35,9 @@ data/
 # Whitelist figures folders (except tikz output)
 # *.ps
 # *.eps
-!thesis/**/figures/**/*.pdf
 **/figures/external/*
-!talks/**/figures/*.pdf
-!talks/**/assets/*.pdf
+!**/figures/*.pdf
+!**/assets/*.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
