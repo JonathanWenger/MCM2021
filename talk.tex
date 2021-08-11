@@ -143,28 +143,59 @@
 
 \end{frame}
 
+\begin{frame}\frametitle{An Example PN Method}
+	\framesubtitle{1D Noisy Quadratic Optimization}
+
+	\emph{Problem:}
+	Consider the 1D quadratic optimization problem
+	\begin{align*}
+		\min_{x \in \mathbb{R}} f(x) = \min_{x \in \mathbb{R}} \frac{1}{2} ax^2 + bx + c
+	\end{align*}
+	where \(a > 0\). Since \(f\) is strictly convex, the unique minimum is given by \(f'(x_*) = 0 \iff
+	x_* = -\frac{b}{a}\).
+	\vspace{2ex}
+
+	\emph{Introducing Noise:}
+	Suppose we only have access to noisy evaluations $$\hat{y} = \hat{f}(x) = \frac{1}{2}(a + \varepsilon_a)x^2 + (b+\varepsilon_b)x
+		+ (c + \varepsilon_c)$$	of the objective function
+	$f$ at $x$, where $\varepsilon = (\varepsilon_a, \varepsilon_b, \varepsilon_c) \sim \mathcal{N}(0, \Lambda)$ and
+	$\Lambda \in \mathbb{R}^{3 \times 3}$ symmetric positive definite.
+	\vspace{2ex}
+
+	\ribbon{\centering Can we still design an efficient numerical method to find a solution?}
+
+\end{frame}
+
+
+% \begin{frame}\frametitle{An Example PN Method}
+% 	\framesubtitle{1D Noisy Quadratic Optimization}
+% 	\centering
+% 	\href{https://probnum.readthedocs.io/en/latest/tutorials/pn_methods.html}{\includegraphics[width=0.9\textwidth]{figures/quadratic-optimization.png}}
+% \end{frame}
+
+
 \subsection{Components of a PNM}
 
 \begin{frame}\frametitle{Components of a (Bayesian) PN Method}
-	\framesubtitle{}
+	\framesubtitle{1D Noisy Quadratic Optimization}
 
 	\begin{columns}[c,totalwidth=\textwidth]
-		\column{.45\textwidth}
+		\column{.25\textwidth}
 
 		\emph{Components}
 		\begin{itemize}
-			\item Prior Knowledge
-			\item Policy
-			\item Action and Observation
-			\item Posterior Inference
+			\item Prior Belief
+			\item Policy and Action
+			\item Information Operator
+			\item Belief Update
 			\item Stopping Criterion
 			\item Hyperparameter Optimization
 
 		\end{itemize}
 
-		\column{.5\textwidth}
+		\column{.74\textwidth}
 		\centering
-		\includegraphics[width=0.6\textwidth]{figures/problinsolve.pdf}
+		\href{https://probnum.readthedocs.io/en/latest/tutorials/pn_methods.html}{\includegraphics[width=\textwidth]{figures/quadratic-optimization.png}}
 
 	\end{columns}
 
@@ -214,7 +245,7 @@
 				\State \({\vy} \gets\) \textsc{InformationOp}($F$, $\rvx$, $\rvq$, $\vs$)
 				% \Comment{observation}
 				\State {\color{gray} \(\theta_* \gets \) \textsc{HyperparamOptim}($\theta, \mS, \mY$)}
-				\State \(\rvq \gets \textsc{BeliefUpdate}((\vs, \vy), \rvx, F,
+				\State \(\rvq \gets \textsc{BeliefUpdate}((\vs, \vy), F, \rvx, \rvq,
 				{\color{gray}\theta_*})\)
 				% \Comment{posterior}
 				\EndWhile
