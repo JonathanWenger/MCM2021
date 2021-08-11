@@ -335,22 +335,24 @@
 		\emph{Interface Design:} Drop-in replacement for NumPy / SciPy
 
 		\begin{python}
-			# Solve using NumPy
-			x = np.linalg.solve(A, b)
+		# Solve using NumPy
+		x = np.linalg.solve(A, b)
 
-			# Solve using ProbNum
-			x_rv, _, _, info = pn.linalg.problinsolve(A, b)\end{python}
+		# Solve using ProbNum
+		x_rv, _, _, info = pn.linalg.problinsolve(A, b)\end{python}
 		\vspace{2ex}
 
 		\emph{Implementation:} Compositionality enables custom PN Methods
 
 		\begin{python}
-			pn.linalg.ProbabilisticLinearSolver(
-			problem=(A, b),
-			state=(A_prior, Ainv_prior),
-			policy=krylov,
-			stopping_criterion=trace_Ainv_cov
-			)\end{python}
+		# Construct custom solver
+		pls = pn.linalg.ProbabilisticLinearSolver(
+			policy = ConjugateDirections(),
+			information_op = MatrixVectorProduct(),
+			stopping_criterion = PosteriorContraction(tol=e-5))
+			
+		# Solve problem
+		pls.solve(problem = (A, b))\end{python}
 
 		\column{.25\textwidth}
 		\centering
