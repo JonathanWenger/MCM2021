@@ -7,13 +7,6 @@
 % Code Highlighting
 \usepackage{pythonhighlight}
 
-% % Tikz
-% \usetikzlibrary{external}
-% \tikzexternalize[mode=list and make]
-% % use  make -j 8 -f talk.makefile to compile with 8 parallel threads (this is what it takes to max out the machine, despite it having 4 cores)
-% \tikzset{external/force remake=false}
-% \tikzsetexternalprefix{figures/external/}
-
 % Information
 \def\myemail{jonathan.wenger@uni-tuebingen.de}
 \def\mywebsite{jonathanwenger.netlify.app}
@@ -22,13 +15,13 @@
 
 \begin{document}
 
-\tikzexternaldisable
+% \tikzexternaldisable
 \begin{frame}
 	\vspace{.5cm}
 	\title{
 		{\bf Probabilistic Numerical Methods}\newline An Algorithmic Perspective
 		\vspace*{-.7cm}}
-	\author{Jonathan Wenger\vspace{-1cm}} \date{Group Meeting MoML\\ September 8, 2020}
+	\author{\bf Jonathan Wenger\vspace{-1cm}} \date{MCM 2021\\ August 19, 2021}
 
 	%\vspace{-1.5cm}
 	\maketitle
@@ -59,42 +52,45 @@
 	%%%%%%%%%%%%%% END OF ANIMATED LOGO %%%%%%%%%%%
 
 \end{frame}
-\tikzexternalenable
+% \tikzexternalenable
 
-\setlength{\figwidth}{.9\textwidth}
-\setlength{\figheight}{.6\textheight}
+\section{Probabilistic Numerical Methods}
+
+\subsection{What and Why?}
 
 \begin{frame}\frametitle{What is a Probabilistic Numerical Method?}
-	\framesubtitle{}
+	\framesubtitle{\dots and why should I care?}
+
+	\emph{\bf Numerical methods} that return \emph{\bf probability measures} designed to quantify numerical error.
+
+	\vspace{2em}
+
+	\begin{columns}
+
+		\column{0.66\textwidth}
+
+		\emph{Advantages}
+		\begin{itemize}
+			\item \textit{structural uncertainty} via a probability measure compared to an error estimate
+			\item \textit{customized methods} for specific problems with bespoke priors
+			\item set \textit{parameters of numerical methods} via the Bayesian formalism
+			\item solution of \textit{mutually related problems} of similar type
+			\item incorporate \textit{sources of stochasticity} in the computation
+		\end{itemize}
+
+		\column{0.33\textwidth}
+
+	\end{columns}
+
+	\vfill
+
+	\ribbon{\centering \textbf{Vision:} Propagation of uncertainty through chains of computations.}
 
 \end{frame}
 
-\begin{frame}\frametitle{Why should I care about PN Methods?}
-	\framesubtitle{}
+\subsection{Components of a PNM}
 
-	\emph{Theoretical Appeal}
-	\begin{itemize}
-		\item enriched \textit{interpretation of classical methods}
-		\item formalizes the \textit{design of adaptive methods} using tools from decision theory
-	\end{itemize}
-
-	\emph{Practical Advantages}
-	\begin{itemize}
-		\item allows to build \textit{customized methods} for specific problems with bespoke priors
-		\item provides a way of \textit{setting parameters of numerical methods} via the Bayesian formalism
-		\item expedites the \textit{solution of mutually related problems} of similar type
-		\item naturally incorporates \textit{sources of stochasticity} in the computation
-		\item \textit{structural uncertainty} via a probability measure compared to an error estimate
-	\end{itemize}
-
-	\emph{Vision}
-	\begin{itemize}
-		\item \textit{propagation of uncertainty} through chains of computations
-	\end{itemize}
-
-\end{frame}
-
-\begin{frame}\frametitle{Components of a PN Method}
+\begin{frame}\frametitle{Components of a (Bayesian) PN Method}
 	\framesubtitle{}
 
 	\begin{columns}[c,totalwidth=\textwidth]
@@ -119,8 +115,10 @@
 
 \end{frame}
 
+\subsection{Formal Definition}
+
 \begin{frame}\frametitle{But what \textit{exactly} is a PN Method?}
-	\framesubtitle{A formal definition.}
+	\framesubtitle{A formal definition and an algorithmic translation.}
 
 	\begin{columns}[totalwidth=\textwidth]
 		\column{.45\textwidth}
@@ -161,7 +159,8 @@
 				\State \({\vy} \gets\) \textsc{InformationOp}($F$, $\rvx$, $\rvq$, $\vs$)
 				% \Comment{observation}
 				\State {\color{gray} \(\theta_* \gets \) \textsc{HyperparamOptim}($\theta, \mS, \mY$)}
-				\State \(\rvq \gets \textsc{BeliefUpdate}((\vs, \vy), \rvx, F, {\color{gray}\theta_*})\)
+				\State \(\rvq \gets \textsc{BeliefUpdate}((\vs, \vy), \rvx, F,
+				{\color{gray}\theta_*})\)
 				% \Comment{posterior}
 				\EndWhile
 				\State \Return $\rvq$
@@ -173,12 +172,16 @@
 
 \end{frame}
 
+\section{Software for PN}
+
+\subsection{ProbNum}
+
 \begin{frame}\frametitle{ProbNum}
 	\framesubtitle{Learn to Approximate. Approximate to Learn.}
 
 	\begin{figure}
 		\centering
-	\includegraphics[width=\textwidth]{figures/probnum.png}
+		\includegraphics[width=\textwidth]{figures/probnum.png}
 	\end{figure}
 
 \end{frame}
@@ -235,6 +238,8 @@
 
 \end{frame}
 
+\subsection{Design Principles}
+
 \begin{frame}[fragile]\frametitle{Design Principles of ProbNum}
 	\framesubtitle{}
 
@@ -274,6 +279,8 @@
 
 \end{frame}
 
+\section{Case Study}
+
 \begin{frame}\frametitle{Case Study: ODE Filters}
 	\framesubtitle{Solving ODEs with Uncertainty Estimation}
 
@@ -286,6 +293,8 @@
 	\end{center}
 
 \end{frame}
+
+\section{Conclusion}
 
 \blackslidetext{
 	\frametitle{Summary}
