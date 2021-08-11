@@ -1,0 +1,51 @@
+%  LaTeX template for abstract submission of contributed talks for MCM 2021 (thanks to MCM 2019 and its organizers)
+
+
+
+
+\speaker{Jonathan}{Wenger}%
+%  (put no space here)
+% Title of the talk, capitalized.
+\title{Probabilistic Numerical Methods -- An Algorithmic Perspective.}
+
+% For each author, give the first name, family name, affiliation, and email.
+% Ideally, the affiliation and email should fit on a single line.  
+% No need to put the full snail mailing address.  
+
+\author{Jonathan}{Wenger}{Universit\"at Tübingen}{jonathan.wenger@uni-tuebingen.de}
+
+% Type your abstract here.
+\abstract{
+\emph{Probabilistic numerical methods} (PNMs) \cite{Hennig2015a, Oates2019,Cockayne2019a} aim to explicitly represent uncertainty resulting from limited computational resources and stochastic input in numerical computation. This emerging paradigm treats a numerical problem as one of statistical inference instead. It holds the promise to improve upon classic methods in areas where adaptivity is needed, related problems are solved repeatedly, stochasticity plays a role and solutions are not unique. However, one key barrier to the wider adoption of such methods is the lack of probabilistic numerics software. 
+
+In this talk, we demonstrate how the theoretical formulation of PNMs can be translated into an algorithmic framework and introduce \textsc{ProbNum} -- a software stack for probabilistic numerics.
+It enables the composition of problem-specific PNMs and paves the way for consistent propagation of uncertainty through the entirety of a computational pipeline.
+	
+	
+%  If you have references, put them here in a format like below. 
+%  This can be obtained using BiBTeX with the bib style plain.bst. 
+%  Note that this must be placed inside the abstract.
+\begin{thebibliography}{41}
+    \providecommand{\natexlab}[1]{#1}
+    
+    \bibitem{Hennig2015a}
+    P.~Hennig, M.~A. Osborne, and M.~Girolami.
+    \newblock Probabilistic numerics and uncertainty in computations.
+    \newblock \emph{Proc. A.}, 471\penalty0 (2179):\penalty0 20150142, 17, 2015.
+    
+    \bibitem{Oates2019}
+    C.~J. Oates and T.~J. Sullivan.
+    \newblock A modern retrospective on probabilistic numerics.
+    \newblock \emph{Stat. Comput.}, 29\penalty0 (6):\penalty0 1335--1351, 2019.
+    
+    \bibitem{Cockayne2019a}
+    J.~Cockayne, C.~J. Oates, T.~J. Sullivan, and M.~Girolami.
+    \newblock Bayesian probabilistic numerical methods.
+    \newblock \emph{SIAM Rev.}, 61\penalty0 (4):\penalty0 756--789,
+      2019{\natexlab{a}}.
+
+
+\end{thebibliography}
+}  % End of abstract.
+
+
