@@ -1,0 +1,323 @@
+\documentclass[10pt,usepdftitle=false,aspectratio=169]{beamer}
+
+% Preamble
+\input{preamble_talk}
+\input{math_commands.tex}
+
+% Code Highlighting
+\usepackage{pythonhighlight}
+
+% % Tikz
+% \usetikzlibrary{external}
+% \tikzexternalize[mode=list and make]
+% % use  make -j 8 -f talk.makefile to compile with 8 parallel threads (this is what it takes to max out the machine, despite it having 4 cores)
+% \tikzset{external/force remake=false}
+% \tikzsetexternalprefix{figures/external/}
+
+% Information
+\def\myemail{jonathan.wenger@uni-tuebingen.de}
+\def\mywebsite{jonathanwenger.netlify.app}
+\def\mygithub{JonathanWenger}
+
+
+\begin{document}
+
+\tikzexternaldisable
+\begin{frame}
+	\vspace{.5cm}
+	\title{
+		{\bf Probabilistic Numerical Methods}\newline An Algorithmic Perspective
+		\vspace*{-.7cm}}
+	\author{Jonathan Wenger\vspace{-1cm}} \date{Group Meeting MoML\\ September 8, 2020}
+
+	%\vspace{-1.5cm}
+	\maketitle
+	%\vspace{1.em}
+
+	\begin{columns}
+		\column{0.45\textwidth}
+		\includegraphics[width=\textwidth]{assets/UT_WBMW_Rot_RGB.pdf}
+		\column{.45\textwidth}
+		\includegraphics[width=.9\textwidth]{assets/MPI-IS_wortbildmarke.png}\\
+		\parbox[c]{.1\textwidth}{\centering\includegraphics[height=1.05cm]{assets/imprs-is-logo.png}}
+	\end{columns}
+
+	\thispagestyle{empty}
+	\setcounter{framenumber}{0}
+
+	%%%%%%%%%%%%%%%% ANIMATED LOGO %%%%%%%%%%%%%%%%
+	%  \tikzifexternalizing{}{%
+	%  \begin{tikzpicture}[remember picture,overlay]
+	%  \node[anchor=south,yshift=-5mm] at (current page.south) 
+	%  {\animategraphics[width=0.9995\paperwidth,autoplay,loop]{36}{assets/logo_TU_169_}{0}{39}};
+	%    \end{tikzpicture}%
+	%  }%
+	% if you don't like the animation or it doesn't work for you, use this here instead:
+	\begin{columns}
+		\includegraphics[width=0.9995\paperwidth]{assets/logo_TU_169_0.pdf}
+	\end{columns}
+	%%%%%%%%%%%%%% END OF ANIMATED LOGO %%%%%%%%%%%
+
+\end{frame}
+\tikzexternalenable
+
+\setlength{\figwidth}{.9\textwidth}
+\setlength{\figheight}{.6\textheight}
+
+\begin{frame}\frametitle{What is a Probabilistic Numerical Method?}
+	\framesubtitle{}
+
+\end{frame}
+
+\begin{frame}\frametitle{Why should I care about PN Methods?}
+	\framesubtitle{}
+
+	\emph{Theoretical Appeal}
+	\begin{itemize}
+		\item enriched \textit{interpretation of classical methods}
+		\item formalizes the \textit{design of adaptive methods} using tools from decision theory
+	\end{itemize}
+
+	\emph{Practical Advantages}
+	\begin{itemize}
+		\item allows to build \textit{customized methods} for specific problems with bespoke priors
+		\item provides a way of \textit{setting parameters of numerical methods} via the Bayesian formalism
+		\item expedites the \textit{solution of mutually related problems} of similar type
+		\item naturally incorporates \textit{sources of stochasticity} in the computation
+		\item \textit{structural uncertainty} via a probability measure compared to an error estimate
+	\end{itemize}
+
+	\emph{Vision}
+	\begin{itemize}
+		\item \textit{propagation of uncertainty} through chains of computations
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}\frametitle{Components of a PN Method}
+	\framesubtitle{}
+
+	\begin{columns}[c,totalwidth=\textwidth]
+		\column{.45\textwidth}
+
+		\emph{Components}
+		\begin{itemize}
+			\item Prior Knowledge
+			\item Policy
+			\item Action and Observation
+			\item Posterior Inference
+			\item Stopping Criterion
+			\item Hyperparameter Optimization
+
+		\end{itemize}
+
+		\column{.5\textwidth}
+		\centering
+		\includegraphics[width=0.6\textwidth]{figures/problinsolve.pdf}
+
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}\frametitle{But what \textit{exactly} is a PN Method?}
+	\framesubtitle{A formal definition.}
+
+	\begin{columns}[totalwidth=\textwidth]
+		\column{.45\textwidth}
+
+		\begin{definition}[\citet{Cockayne2019a}]
+			Let \((\mathcal{X}, \Sigma_\mathcal{X})\),
+			\((\mathcal{A}, \Sigma_\mathcal{A})\) and \((\mathcal{Q},
+			\Sigma_\mathcal{Q})\) be measurable spaces and \(X\) a random variable on
+			\((\mathcal{X}, \Sigma_\mathcal{X})\). Take
+			\(\mu(B)=\mathbb{P}(\{w : X(w) \in B\})\) to be the law of \(X\). Further, let
+			\(A:\mathcal{X} \rightarrow \mathcal{A}\), \(Q: \mathcal{X}
+			\rightarrow \mathcal{Q}\) and \(B: \mathcal{P}_\mathcal{X} \times
+			\mathcal{A} \rightarrow \mathcal{P}_\mathcal{Q}\) where \(A\) and
+			\(Q\) are measurable functions.
+			\vspace{1.5ex}
+
+			The pair \(M=(A,B)\) is called a \emph{probabilistic numerical method} for estimation of a quantity of interest
+			\(Q\). The map \(A\) is called an \emph{information operator}, and the map \(B\) is called a
+			\emph{belief update operator}.
+		\end{definition}
+
+		\column{.05\textwidth}
+
+		\column{.5\textwidth}
+
+		\textbf{Goal:} Given a problem \(F(\vx) = 0\), return a quantity of interest \(q(\vx)\).
+
+		\setcounter{algorithm}{0}
+		\begin{algorithm}[H]
+			\caption{Probabilistic Numerical Method}
+			\small
+			\begin{algorithmic}[1]
+				\Procedure{\textsc{ProbNumMethod}}{$F(\cdot), \rvx$}
+				\Comment{problem \& prior}
+				\While{\textbf{not} \textsc{HasConverged}($F, \rvx, \rvq$)}	%\Comment{stopping criteria}
+				\State \({\vs} \gets \textsc{Policy}(F, \rvx, \rvq)\)
+				\Comment{action via policy}
+				\State \({\vy} \gets\) \textsc{InformationOp}($F$, $\rvx$, $\rvq$, $\vs$)
+				% \Comment{observation}
+				\State {\color{gray} \(\theta_* \gets \) \textsc{HyperparamOptim}($\theta, \mS, \mY$)}
+				\State \(\rvq \gets \textsc{BeliefUpdate}((\vs, \vy), \rvx, F, {\color{gray}\theta_*})\)
+				% \Comment{posterior}
+				\EndWhile
+				\State \Return $\rvq$
+				\EndProcedure
+			\end{algorithmic}
+		\end{algorithm}
+
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}\frametitle{ProbNum}
+	\framesubtitle{Learn to Approximate. Approximate to Learn.}
+
+	\begin{figure}
+		\centering
+	\includegraphics[width=\textwidth]{figures/probnum.png}
+	\end{figure}
+
+\end{frame}
+
+\begin{frame}\frametitle{ProbNum}
+	\framesubtitle{Learn to Approximate. Approximate to Learn.}
+
+	\begin{columns}[totalwidth=\textwidth]
+		\column{.6\textwidth}
+
+		\emph{Problem}
+		\begin{itemize}
+			\item few implementations of probabilistic numerical methods
+			\item not enough convincing applications available
+		\end{itemize}
+
+		\emph{Idea}
+		\begin{itemize}
+			\item lab / community-wide software framework for PN
+		\end{itemize}
+
+		\emph{Goals}
+		\begin{itemize}
+			\item \textit{promote PN research} via a useful code base
+			\item \textit{simplify} the \textit{implementation} of new PN methods
+			\item \textit{demonstrate} the \textit{use cases} of PN
+			\item provide \textit{teaching} tools
+		\end{itemize}
+
+		\column{.3\textwidth}
+		\centering
+		\vspace{-3ex}
+		\href{https://github.com/probabilistic-numerics/probnum/}{\includegraphics[scale=.075]{figures/probnum_logo.png}}
+		\includegraphics[width=\textwidth]{figures/probnum_contributors.png}
+		%\vspace{-4ex}
+		\begin{center}
+			\begin{tikzpicture}[yscale=.6]
+				%	    \filldraw[black] (2,0) rectangle (4,2);
+				%	    \filldraw[gray] (0,2) rectangle (2,4);
+				%	    \filldraw[gray] (2,2) rectangle (4,4);
+
+				\draw[step=2cm,thick] (0,0) grid (4,4);
+
+				\node[align=center] at (1,3) {Linear\\ Algebra};
+				\node[align=center] at (3,3) {Quadrature};
+
+				\node[align=center] at (3,1) {Bayesian\\ Optimization};
+				\node[align=center] at (1,1) {Differential\\ Equations};
+			\end{tikzpicture}
+		\end{center}
+	\end{columns}
+	\vspace{1em}
+	\ribbon{ProbNum on GitHub: {\small \url{https://github.com/probabilistic-numerics/probnum/}}}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Design Principles of ProbNum}
+	\framesubtitle{}
+
+	\begin{columns}[totalwidth=\textwidth]
+		\column{.7\textwidth}
+
+		\emph{In- and Outputs:} PN Methods take random variables / processes as inputs and return random
+		variables / processes as outputs.
+		\vspace{2ex}
+
+		\emph{Interface Design:} Drop-in replacement for NumPy / SciPy
+
+		\begin{python}
+			# Solve using NumPy
+			x = np.linalg.solve(A, b)
+
+			# Solve using ProbNum
+			x_rv, _, _, info = pn.linalg.problinsolve(A, b)\end{python}
+		\vspace{2ex}
+
+		\emph{Implementation:} Compositionality enables custom PN Methods
+
+		\begin{python}
+			pn.linalg.ProbabilisticLinearSolver(
+			problem=(A, b),
+			state=(A_prior, Ainv_prior),
+			policy=krylov,
+			stopping_criterion=trace_Ainv_cov
+			)\end{python}
+
+		\column{.25\textwidth}
+		\centering
+		\vspace{-3ex}
+		\href{https://github.com/probabilistic-numerics/probnum/}{\includegraphics[scale=1]{figures/probnum_logo.png}}
+
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}\frametitle{Case Study: ODE Filters}
+	\framesubtitle{Solving ODEs with Uncertainty Estimation}
+
+	\begin{center}
+		\url{http://www.probabilistic-numerics.org/en/latest/tutorials.html}
+	\end{center}
+
+	\begin{center}
+		\includegraphics[width=0.75\textwidth]{figures/predator-prey.png}
+	\end{center}
+
+\end{frame}
+
+\blackslidetext{
+	\frametitle{Summary}
+
+	\textbf{PN Methods - An Algorithmic View}
+	\begin{itemize}
+		\item implementing PN methods forces being precise about concepts
+		\item abstract implementation surprisingly hard to define
+		\item components of a PN method
+		      \begin{itemize}
+			      \item prior
+			      \item policy
+			      \item action and observation
+			      \item posterior inference
+			      \item stopping criterion
+			      \item hyperparameter optimization
+		      \end{itemize}
+	\end{itemize}
+
+	\whiteribbon{\centering Questions or Feedback?}
+
+}
+
+% References
+\newcounter{references}
+\setcounter{references}{\value{framenumber}} % Adjust frame counter to not include references
+
+\begin{frame}[allowframebreaks]{References}
+	\bibliographystyle{apalike}
+	\bibliography{references}
+\end{frame}
+
+\setcounter{framenumber}{\value{references}}
+
+\end{document}
