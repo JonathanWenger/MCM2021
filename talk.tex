@@ -61,9 +61,12 @@
 \begin{frame}\frametitle{What is a Probabilistic Numerical Method?}
 	\framesubtitle{\dots and why should I care?}
 
-	\begin{center}
-		\emph{\bf Numerical methods} that return \emph{\bf probability measures} designed to quantify numerical error.
-	\end{center}
+	\begin{block}{}
+		\emph{\bf Numerical methods} that return \emph{\bf probability measures} designed to
+		quantify numerical error.
+	\end{block}
+
+	\vspace{1em}
 
 	\begin{columns}
 
@@ -80,9 +83,61 @@
 
 		\column{0.33\textwidth}
 
+		\centering
+
+		\adjustbox{max width=0.9\textwidth, valign=c}{
+			\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+		\begin{tikzpicture}[
+				x=0.75pt,
+				y=0.75pt,
+				yscale=-1,
+				xscale=1,
+			]
+			%uncomment if require: \path (0,245); %set diagram left start at 0, and has height of 245
+
+			%Shape: Parallelogram [id:dp0484593371293055] 
+			\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }	,fill opacity=0.2 ] (36.37,218.7) -- (36.37,128) -- (218.37,-1.09) -- (218.37,89.61) -- cycle ;
+			%Straight Lines [id:da8755796520304125] 
+			\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }	,draw opacity=1 ][fill={rgb, 255:red, 0; green, 0; blue, 0 }	,fill opacity=0.2 ]   (75,16) -- (128.92,106.76) ;
+			\draw [shift={(128.92,106.76)}, rotate = 59.29] [color={rgb, 255:red, 128; green, 128; blue, 128 }	,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }	,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]	;
+			%Straight Lines [id:da17763309372062497] 
+			\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }	,draw opacity=1 ][fill={rgb, 255:red, 0; green, 0; blue, 0 }	,fill opacity=0.2 ]   (148,139) -- (187.37,206.85) ;
+
+			%Shape: Ellipse [id:dp3096241264352757] 
+			\draw  [color={rgb, 255:red, 74; green, 108; blue, 226 }	,draw opacity=0.5 ][fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=0.2 ][line width=1.5]  (45.3,163.6) .. controls (39.06,154.41) and (71.43,121.51) .. (117.6,90.12) .. controls
+			(163.78,58.73) and (206.28,40.73) .. (212.53,49.92) .. controls (218.78,59.11) and (186.41,92.01)
+			.. (140.23,123.4) .. controls (94.05,154.8) and (51.55,172.8) .. (45.3,163.6) -- cycle ;
+			%Straight Lines [id:da7512972710991653] 
+			\draw  [dash pattern={on 4.5pt off 4.5pt}]  (75,16) -- (127.9,105.04) ;
+			\draw [shift={(128.92,106.76)}, rotate = 239.29] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (12,-3) -- (0,0) -- (12,3) -- cycle    ;
+			\draw [shift={(75,16)}, rotate = 59.29] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]	;
+			%Straight Lines [id:da6115370118887071] 
+			\draw  [dash pattern={on 4.5pt off 4.5pt}]  (63.37,151.85) -- (127.27,107.89) ;
+			\draw [shift={(128.92,106.76)}, rotate = 505.48] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (12,-3) -- (0,0) -- (12,3) -- cycle    ;
+			\draw [shift={(63.37,151.85)}, rotate = 325.48] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]	 ;
+			%Shape: Ellipse [id:dp22358481605415048] 
+			\draw  [color={rgb, 255:red, 74; green, 108; blue, 226 }  ,draw opacity=0.5 ][line width=1.5]  (99.97,126.44) .. controls (97.81,123.26) and (109.01,111.87) .. (125,101) .. controls
+			(140.99,90.13) and (155.7,83.9) .. (157.86,87.08) .. controls (160.02,90.26) and (148.82,101.65) ..
+			(132.83,112.52) .. controls (116.85,123.39) and (102.14,129.62) .. (99.97,126.44) -- cycle ;
+			%Shape: Ellipse [id:dp6795155838154404] 
+			\draw  [color={rgb, 255:red, 74; green, 108; blue, 226 }  ,draw opacity=0.5 ][line width=1.5]  (75.88,143.81) .. controls (72.03,138.15) and (91.96,117.89) .. (120.4,98.56) .. controls
+			(148.84,79.23) and (175.01,68.14) .. (178.85,73.8) .. controls (182.7,79.46) and (162.77,99.72) ..
+			(134.33,119.05) .. controls (105.9,138.38) and (79.73,149.47) .. (75.88,143.81) -- cycle ;
+
+			% Text Node
+			\draw (135,97) node [anchor=north west][inner sep=0.75pt]  [font=\Large]  {$\vx_{k+1}$};
+			% Text Node
+			\draw (50,157) node [anchor=north west][inner sep=0.75pt]  [font=\Large]  {$\vx_*$};
+			% Text Node
+			\draw (87,5.4) node [anchor=north west][inner sep=0.75pt]  [font=\Large]  {$\vx_k$};
+
+		\end{tikzpicture}
+		}
+
 	\end{columns}
 
-	\vfill
+	\vspace{1.8em}
 
 	\ribbon{\centering \textbf{Vision:} Propagation of uncertainty through chains of computations.}
 
