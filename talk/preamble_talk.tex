@@ -44,12 +44,12 @@
 \usetikzlibrary{tikzmark}
 \usetikzlibrary{calc}
 
-% % Tikz externalize
-% \usetikzlibrary{external}
-% \tikzexternalize[mode=list and make]
-% % use  "make -j 8 -f main.makefile" to compile with 8 parallel threads (this is what it takes to max out the machine, despite it having 4 cores)
-% \tikzset{external/force remake=false}
-% \tikzsetexternalprefix{figures/external/}
+% Tikz externalize
+\usetikzlibrary{external}
+\tikzexternalize[mode=list and make]
+% use  "make -j 8 -f main.makefile" to compile with 8 parallel threads (this is what it takes to max out the machine, despite it having 4 cores)
+\tikzset{external/force remake=false}
+\tikzsetexternalprefix{figures/external/}
 
 % Plot dimensions
 \newlength{\figureheight}
