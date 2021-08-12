@@ -18,14 +18,15 @@ jobs:
         with:
           working_directory: .
           root_file: |
-            talk.tex
+            main.tex
           latexmk_shell_escape: true
           extra_system_packages: "make"
           post_compile: |
-            if test -f 'talk.makefile'; then
-              make -B -f talk.makefile
+            if test -f 'main.makefile'; then
+              make -B -f main.makefile
             fi
-            pdflatex -g talk.tex
+            pdflatex -g main.tex
+            pdflatex -g main.tex
             latexmk -c
 
       - name: Push compiled documents to separate branch
@@ -33,4 +34,4 @@ jobs:
         with:
           branch: compiled # The branch the action should deploy to.
           folder: . # The folder the action should deploy.
-          target-folder: talk
+          target-folder: .
