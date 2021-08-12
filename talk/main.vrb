@@ -1,0 +1,75 @@
+\frametitle{Design Principles}
+	\framesubtitle{ProbNum: Learn to Approximate. Approximate to Learn}
+
+	\begin{columns}[totalwidth=\textwidth]
+		\column{.7\textwidth}
+
+		\emph{In- and Outputs:} Random variables / processes.
+
+		\vspace{2ex}
+
+		\emph{Interface:} Drop-in replacement for NumPy / SciPy
+
+		\begin{python}
+		# Solve using NumPy
+		x = np.linalg.solve(A, b)
+
+		# Solve using ProbNum
+		x_rv, _, _, info = pn.linalg.problinsolve(A, b)\end{python}
+		\vspace{2ex}
+
+		\emph{Implementation:} Modularity enables custom PN Methods
+
+		\begin{python}
+		# Construct custom solver
+		pls = pn.linalg.ProbabilisticLinearSolver(
+			policy = ConjugateDirections(),
+			information_op = MatrixVectorProduct(),
+			stopping_criterion = PosteriorContraction(tol=e-5))
+			
+		# Solve problem
+		pls.solve(problem = (A, b))\end{python}
+
+		\column{.25\textwidth}
+		\centering
+
+		\adjustbox{max width=\textwidth}{
+		\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+		\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+		%uncomment if require: \path (0,123); %set diagram left start at 0, and has height of 123
+
+		%Shape: Circle [id:dp7646574930915576]
+		\draw  [fill={rgb, 255:red, 227; green, 227; blue, 227 }  ,fill opacity=1 ][line width=0.75]  (0,25) .. controls (0,11.19) and (11.19,0) .. (25,0) .. controls (38.81,0) and (50,11.19) .. (50,25) .. controls (50,38.81) and (38.81,50) .. (25,50) .. controls (11.19,50) and (0,38.81) .. (0,25) -- cycle ;
+		%Straight Lines [id:da1548878979479026]
+		\draw [line width=0.75]    (50,25) -- (100,50) ;
+		%Shape: Rectangle [id:dp6888034447692613]
+		\draw  [line width=0.75]  (100.5,40) -- (159.5,40) -- (159.5,80) -- (100.5,80) -- cycle ;
+		%Shape: Circle [id:dp8228896109607134]
+		\draw  [line width=0.75]  (0,95) .. controls (0,81.19) and (11.19,70) .. (25,70) .. controls (38.81,70) and (50,81.19) .. (50,95) .. controls (50,108.81) and (38.81,120) .. (25,120) .. controls (11.19,120) and (0,108.81) .. (0,95) -- cycle ;
+		%Straight Lines [id:da1560297336018157]
+		\draw [line width=0.75]    (50,95) -- (100,70) ;
+		%Straight Lines [id:da9104270628621394]
+		\draw [line width=0.75]    (159,61) -- (219,61) ;
+		%Shape: Circle [id:dp03169773639378193]
+		\draw  [line width=0.75]  (219,61) .. controls (219,47.19) and (230.19,36) .. (244,36) .. controls (257.81,36) and (269,47.19) .. (269,61) .. controls (269,74.81) and (257.81,86) .. (244,86) .. controls (230.19,86) and (219,74.81) .. (219,61) -- cycle ;
+
+		% Text Node
+		\draw (15,12.9) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$F$};
+		% Text Node
+		\draw (102,48) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$\text{PNM}$};
+		% Text Node
+		\draw (17,89) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$\rvx$};
+		% Text Node
+		\draw (234,53) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$\rvq$};
+
+
+		\end{tikzpicture}}
+
+		\vspace{3em}
+
+
+		\href{https://github.com/probabilistic-numerics/probnum/}{\includegraphics[scale=0.3]{figures/probnum_logo_text.png}}
+
+	\end{columns}
+

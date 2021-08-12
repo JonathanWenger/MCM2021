@@ -1,0 +1,30 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cockayne et~al.(2019)Cockayne, Oates, Sullivan, and
+  Girolami]{Cockayne2019a}
+Jon Cockayne, Chris Oates, TJ~Sullivan, and Mark Girolami.
+\newblock Bayesian probabilistic numerical methods.
+\newblock \emph{SIAM Review}, 61\penalty0 (4):\penalty0 756--789, 2019.
+
+\bibitem[Schober et~al.(2019)Schober, S{\"a}rkk{\"a}, and Hennig]{Schober2019}
+Michael Schober, Simo S{\"a}rkk{\"a}, and Philipp Hennig.
+\newblock A probabilistic model for the numerical solution of initial value
+  problems.
+\newblock \emph{Statistics and Computing}, 29\penalty0 (1):\penalty0 99--122,
+  2019.
+
+\bibitem[Bosch et~al.(2021)Bosch, Hennig, and Tronarp]{Bosch2021}
+Nathanael Bosch, Philipp Hennig, and Filip Tronarp.
+\newblock Calibrated adaptive probabilistic ode solvers.
+\newblock In \emph{Proceedings of The 24th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, volume 130 of
+  \emph{Proceedings of Machine Learning Research}, pages 3466--3474. PMLR,
+  2021.
+\newblock URL \url{http://proceedings.mlr.press/v130/bosch21a.html}.
+
+\end{thebibliography}

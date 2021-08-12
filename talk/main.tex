@@ -1,0 +1,495 @@
+\documentclass[10pt,usepdftitle=false,aspectratio=169]{beamer}
+
+% Preamble
+\input{preamble_talk}
+\input{math_commands.tex}
+
+% Code Highlighting
+\usepackage{pythonhighlight}
+
+% Information
+\def\myemail{jonathan.wenger@uni-tuebingen.de}
+\def\mywebsite{jonathanwenger.netlify.app}
+\def\mygithub{JonathanWenger}
+
+
+\begin{document}
+
+% \tikzexternaldisable
+\begin{frame}
+	\vspace{.5cm}
+	\title{
+		{\bf Probabilistic Numerical Methods}\newline An Algorithmic Perspective
+		\vspace*{-.7cm}}
+	\author{\bf Jonathan Wenger\vspace{-1cm}} \date{MCM 2021\\ August 19, 2021}
+
+	%\vspace{-1.5cm}
+	\maketitle
+	%\vspace{1.em}
+
+	\begin{columns}
+		\column{0.45\textwidth}
+		\includegraphics[width=\textwidth]{assets/UT_WBMW_Rot_RGB.pdf}
+		\column{.45\textwidth}
+		\includegraphics[width=.9\textwidth]{assets/MPI-IS_wortbildmarke.png}\\
+		\parbox[c]{.1\textwidth}{\centering\includegraphics[height=1.05cm]{assets/imprs-is-logo.png}}
+	\end{columns}
+
+	\thispagestyle{empty}
+	\setcounter{framenumber}{0}
+
+	%%%%%%%%%%%%%%%% ANIMATED LOGO %%%%%%%%%%%%%%%%
+	%  \tikzifexternalizing{}{%
+	%  \begin{tikzpicture}[remember picture,overlay]
+	%  \node[anchor=south,yshift=-5mm] at (current page.south) 
+	%  {\animategraphics[width=0.9995\paperwidth,autoplay,loop]{36}{assets/logo_TU_169_}{0}{39}};
+	%    \end{tikzpicture}%
+	%  }%
+	% if you don't like the animation or it doesn't work for you, use this here instead:
+	\begin{columns}
+		\includegraphics[width=0.9995\paperwidth]{assets/logo_TU_169_0.pdf}
+	\end{columns}
+	%%%%%%%%%%%%%% END OF ANIMATED LOGO %%%%%%%%%%%
+
+\end{frame}
+% \tikzexternalenable
+
+\section{Probabilistic Numerical Methods}
+
+\subsection{What and Why?}
+
+\begin{frame}\frametitle{What is a Probabilistic Numerical Method?}
+	\framesubtitle{\dots and why should I care?}
+
+	\begin{block}{}
+		\emph{\bf Numerical methods} that return \emph{\bf probability measures} designed to
+		quantify numerical error.
+	\end{block}
+
+	\vspace{1em}
+
+	\begin{columns}
+
+		\column{0.66\textwidth}
+
+		\emph{Advantages}
+		\begin{itemize}
+			\item \textit{structural uncertainty} via a probability measure compared to an error estimate
+			\item \textit{customized methods} for specific problems with bespoke priors
+			\item set \textit{parameters of numerical methods} via the Bayesian formalism
+			\item solution of \textit{mutually related problems} of similar type
+			\item incorporate \textit{sources of stochasticity} in the computation
+		\end{itemize}
+
+		\column{0.33\textwidth}
+
+		\centering
+
+		\adjustbox{max width=0.9\textwidth, valign=c}{
+			\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+		\begin{tikzpicture}[
+				x=0.75pt,
+				y=0.75pt,
+				yscale=-1,
+				xscale=1,
+			]
+			%uncomment if require: \path (0,245); %set diagram left start at 0, and has height of 245
+
+			%Shape: Parallelogram [id:dp0484593371293055] 
+			\draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }	,fill opacity=0.2 ] (36.37,218.7) -- (36.37,128) -- (218.37,-1.09) -- (218.37,89.61) -- cycle ;
+			%Straight Lines [id:da8755796520304125] 
+			\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }	,draw opacity=1 ][fill={rgb, 255:red, 0; green, 0; blue, 0 }	,fill opacity=0.2 ]   (75,16) -- (128.92,106.76) ;
+			\draw [shift={(128.92,106.76)}, rotate = 59.29] [color={rgb, 255:red, 128; green, 128; blue, 128 }	,draw opacity=1 ][fill={rgb, 255:red, 128; green, 128; blue, 128 }	,fill opacity=1 ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]	;
+			%Straight Lines [id:da17763309372062497] 
+			\draw [color={rgb, 255:red, 128; green, 128; blue, 128 }	,draw opacity=1 ][fill={rgb, 255:red, 0; green, 0; blue, 0 }	,fill opacity=0.2 ]   (148,139) -- (187.37,206.85) ;
+
+			%Shape: Ellipse [id:dp3096241264352757] 
+			\draw  [color={rgb, 255:red, 74; green, 108; blue, 226 }	,draw opacity=0.5 ][fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=0.2 ][line width=1.5]  (45.3,163.6) .. controls (39.06,154.41) and (71.43,121.51) .. (117.6,90.12) .. controls
+			(163.78,58.73) and (206.28,40.73) .. (212.53,49.92) .. controls (218.78,59.11) and (186.41,92.01)
+			.. (140.23,123.4) .. controls (94.05,154.8) and (51.55,172.8) .. (45.3,163.6) -- cycle ;
+			%Straight Lines [id:da7512972710991653] 
+			\draw  [dash pattern={on 4.5pt off 4.5pt}]  (75,16) -- (127.9,105.04) ;
+			\draw [shift={(128.92,106.76)}, rotate = 239.29] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (12,-3) -- (0,0) -- (12,3) -- cycle    ;
+			\draw [shift={(75,16)}, rotate = 59.29] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]	;
+			%Straight Lines [id:da6115370118887071] 
+			\draw  [dash pattern={on 4.5pt off 4.5pt}]  (63.37,151.85) -- (127.27,107.89) ;
+			\draw [shift={(128.92,106.76)}, rotate = 505.48] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (12,-3) -- (0,0) -- (12,3) -- cycle    ;
+			\draw [shift={(63.37,151.85)}, rotate = 325.48] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]	 ;
+			%Shape: Ellipse [id:dp22358481605415048] 
+			\draw  [color={rgb, 255:red, 74; green, 108; blue, 226 }  ,draw opacity=0.5 ][line width=1.5]  (99.97,126.44) .. controls (97.81,123.26) and (109.01,111.87) .. (125,101) .. controls
+			(140.99,90.13) and (155.7,83.9) .. (157.86,87.08) .. controls (160.02,90.26) and (148.82,101.65) ..
+			(132.83,112.52) .. controls (116.85,123.39) and (102.14,129.62) .. (99.97,126.44) -- cycle ;
+			%Shape: Ellipse [id:dp6795155838154404] 
+			\draw  [color={rgb, 255:red, 74; green, 108; blue, 226 }  ,draw opacity=0.5 ][line width=1.5]  (75.88,143.81) .. controls (72.03,138.15) and (91.96,117.89) .. (120.4,98.56) .. controls
+			(148.84,79.23) and (175.01,68.14) .. (178.85,73.8) .. controls (182.7,79.46) and (162.77,99.72) ..
+			(134.33,119.05) .. controls (105.9,138.38) and (79.73,149.47) .. (75.88,143.81) -- cycle ;
+
+			% Text Node
+			\draw (135,97) node [anchor=north west][inner sep=0.75pt]  [font=\Large]  {$\vx_{k+1}$};
+			% Text Node
+			\draw (50,157) node [anchor=north west][inner sep=0.75pt]  [font=\Large]  {$\vx_*$};
+			% Text Node
+			\draw (87,5.4) node [anchor=north west][inner sep=0.75pt]  [font=\Large]  {$\vx_k$};
+
+		\end{tikzpicture}
+		}
+
+	\end{columns}
+
+	\vspace{1.8em}
+
+	\ribbon{\centering \textbf{Vision:} Propagation of uncertainty through chains of computations.}
+
+\end{frame}
+
+\begin{frame}\frametitle{An Example Problem}
+	\framesubtitle{1D Noisy Quadratic Optimization}
+
+	\emph{Problem:}
+	Consider the 1D quadratic optimization problem
+	\begin{align*}
+		\min_{x \in \mathbb{R}} f(x) = \min_{x \in \mathbb{R}} \frac{1}{2} ax^2 + bx + c
+	\end{align*}
+	where \(a > 0\). Since \(f\) is strictly convex, the unique minimum is given by \(f'(x_*) = 0 \iff
+	x_* = -\frac{b}{a}\).
+	\vspace{2ex}
+
+	\emph{Introducing Noise:}
+	Suppose we only have access to noisy evaluations $$\hat{y} = \hat{f}(x) = \frac{1}{2}(a + \varepsilon_a)x^2 + (b+\varepsilon_b)x
+		+ (c + \varepsilon_c)$$	of the objective function
+	$f$ at $x$, where $\varepsilon = (\varepsilon_a, \varepsilon_b, \varepsilon_c) \sim \mathcal{N}(0, \Lambda)$ and
+	$\Lambda \in \mathbb{R}^{3 \times 3}$ symmetric positive definite.
+	\vspace{2ex}
+
+	\ribbon{\centering Can we still design an efficient numerical method to find a solution?}
+
+\end{frame}
+
+
+% \begin{frame}\frametitle{An Example PN Method}
+% 	\framesubtitle{1D Noisy Quadratic Optimization}
+% 	\centering
+% 	\href{https://probnum.readthedocs.io/en/latest/tutorials/pn_methods.html}{\includegraphics[width=0.9\textwidth]{figures/quadratic-optimization.png}}
+% \end{frame}
+
+
+\subsection{Components of a PNM}
+
+\begin{frame}\frametitle{Components of a (Bayesian) PN Method}
+	\framesubtitle{1D Noisy Quadratic Optimization}
+
+	\begin{columns}[c,totalwidth=\textwidth]
+		\column{.25\textwidth}
+
+		\emph{Components}
+		\begin{itemize}
+			\item Prior Belief
+			\item Policy and Action
+			\item Information Operator
+			\item Belief Update
+			\item Stopping Criterion
+			\item Hyperparameter Optimization
+
+		\end{itemize}
+
+		\column{.74\textwidth}
+		\centering
+		\href{https://probnum.readthedocs.io/en/latest/tutorials/pn_methods.html}{\includegraphics[width=\textwidth]{figures/quadratic-optimization.png}}
+
+	\end{columns}
+
+\end{frame}
+
+\subsection{Formal Definition}
+
+\begin{frame}\frametitle{But what \textit{exactly} is a PN Method?}
+	\framesubtitle{A formal definition and an algorithmic translation.}
+
+	\begin{columns}[totalwidth=\textwidth]
+		\column{.45\textwidth}
+
+		\begin{definition}[\citet{Cockayne2019a}]
+			Let \((\mathcal{X}, \Sigma_\mathcal{X})\),
+			\((\mathcal{A}, \Sigma_\mathcal{A})\) and \((\mathcal{Q},
+			\Sigma_\mathcal{Q})\) be measurable spaces and \(X\) a random variable on
+			\((\mathcal{X}, \Sigma_\mathcal{X})\). Take
+			\(\mu(B)=\mathbb{P}(\{w : X(w) \in B\})\) to be the law of \(X\). Further, let
+			\(A:\mathcal{X} \rightarrow \mathcal{A}\), \(Q: \mathcal{X}
+			\rightarrow \mathcal{Q}\) and \(B: \mathcal{P}_\mathcal{X} \times
+			\mathcal{A} \rightarrow \mathcal{P}_\mathcal{Q}\) where \(A\) and
+			\(Q\) are measurable functions.
+			\vspace{1.5ex}
+
+			The pair \(M=(A,B)\) is called a \emph{probabilistic numerical method} for estimation of a quantity of interest
+			\(Q\). The map \(A\) is called an \emph{information operator}, and the map \(B\) is called a
+			\emph{belief update operator}.
+		\end{definition}
+
+		\column{.05\textwidth}
+
+		\column{.5\textwidth}
+
+		\textbf{Goal:} Given a problem \(F(\vx) = 0\), return a quantity of interest \(q(\vx)\).
+
+		\setcounter{algorithm}{0}
+		\begin{algorithm}[H]
+			\caption{Probabilistic Numerical Method}
+			\small
+			\begin{algorithmic}[1]
+				\Procedure{\textsc{ProbNumMethod}}{$F(\cdot), \rvx$}
+				\Comment{problem \& prior}
+				\While{\textbf{not} \textsc{HasConverged}($F, \rvx, \rvq$)}	%\Comment{stopping criteria}
+				\State \({\vs} \gets \textsc{Policy}(F, \rvx, \rvq)\)
+				\Comment{action via policy}
+				\State \({\vy} \gets\) \textsc{InformationOp}($F$, $\rvx$, $\rvq$, $\vs$)
+				% \Comment{observation}
+				\State {\color{gray} \(\theta_* \gets \) \textsc{HyperparamOptim}($\theta, \mS, \mY$)}
+				\State \(\rvq \gets \textsc{BeliefUpdate}((\vs, \vy), F, \rvx, \rvq,
+				{\color{gray}\theta_*})\)
+				% \Comment{posterior}
+				\EndWhile
+				\State \Return $\rvq$
+				\EndProcedure
+			\end{algorithmic}
+		\end{algorithm}
+
+	\end{columns}
+
+	\vspace{1.5em}
+
+	\ribbon{\centering Modular and composable \textit{implementations of PN methods}?}
+
+\end{frame}
+
+\section{Software for PN}
+
+\subsection{ProbNum}
+
+\begin{frame}\frametitle{ProbNum}
+	\framesubtitle{Probabilistic Numerics in Python.}
+	\vspace{-0.35em}
+	\makebox[\linewidth]{\includegraphics[width=1\paperwidth]{figures/probnum-docs.png}}
+\end{frame}
+
+\begin{frame}\frametitle{ProbNum}
+	\framesubtitle{Probabilistic Numerics in Python.}
+
+	\begin{columns}
+		\column{.66\textwidth}
+
+		\emph{\bf ProbNum} is a Python library for solving numerical problems.
+
+		{\small
+		\begin{itemize}
+			\item \emph{Linear solvers}: $\mA \vx = \vb$ 
+			\item \emph{ODE solvers}: $\dot{\vy}(t) = f(\vy(t), t)$
+			\item \emph{Integral solvers (quadrature)}: $F= \int f(x) p(x) d\, x$
+			\item Filters and smoothers
+			\item Random variables and random processes
+			\item Linear operators $\vv \mapsto \mA \vv$
+		\end{itemize}
+		}
+
+		\emph{Goals}
+		\begin{itemize}
+			\item expedite the \textit{implementation} of new PN methods
+			\item make PN methods available for \textit{applications}
+			\item demonstrate the \textit{use cases} of PN
+		\end{itemize}
+
+		\column{.33\textwidth}
+
+		{
+		\centering
+
+		\href{https://github.com/probabilistic-numerics/probnum/}{\includegraphics[scale=0.35]{figures/probnum_logo_text.png}}
+		}
+
+		\vspace{0.5em}
+
+		\begin{center}
+			\begin{tikzpicture}[yscale=.5]
+				%	    \filldraw[black] (2,0) rectangle (4,2);
+				%	    \filldraw[gray] (0,2) rectangle (2,4);
+				%	    \filldraw[gray] (2,2) rectangle (4,4);
+
+				\draw[step=2cm,thick] (0,0) grid (4,4);
+
+				\node[align=center] at (1,3) {Linear\\ Algebra};
+				\node[align=center] at (3,3) {Quadrature};
+
+				\node[align=center] at (3,1) {\textcolor{gray}{Bayesian}\\ \textcolor{gray}{Optimization}};
+				\node[align=center] at (1,1) {Differential\\ Equations};
+			\end{tikzpicture}
+		\end{center}
+
+		\vspace{0.5em}
+
+		\includegraphics[width=0.8\textwidth]{figures/probnum-contributors.png}
+
+	\end{columns}
+
+	\vspace{2em}
+	\ribbon{\centering \url{https://github.com/probabilistic-numerics/probnum/}}
+
+\end{frame}
+
+\subsection{Design Principles}
+
+\begin{frame}[fragile]\frametitle{Design Principles}
+	\framesubtitle{ProbNum: Learn to Approximate. Approximate to Learn}
+
+	\begin{columns}[totalwidth=\textwidth]
+		\column{.7\textwidth}
+
+		\emph{In- and Outputs:} Random variables / processes.
+
+		\vspace{2ex}
+
+		\emph{Interface:} Drop-in replacement for NumPy / SciPy
+
+		\begin{python}
+		# Solve using NumPy
+		x = np.linalg.solve(A, b)
+
+		# Solve using ProbNum
+		x_rv, _, _, info = pn.linalg.problinsolve(A, b)\end{python}
+		\vspace{2ex}
+
+		\emph{Implementation:} Modularity enables custom PN Methods
+
+		\begin{python}
+		# Construct custom solver
+		pls = pn.linalg.ProbabilisticLinearSolver(
+			policy = ConjugateDirections(),
+			information_op = MatrixVectorProduct(),
+			stopping_criterion = PosteriorContraction(tol=e-5))
+			
+		# Solve problem
+		pls.solve(problem = (A, b))\end{python}
+
+		\column{.25\textwidth}
+		\centering
+
+		\adjustbox{max width=\textwidth}{
+		\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+		\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+		%uncomment if require: \path (0,123); %set diagram left start at 0, and has height of 123
+
+		%Shape: Circle [id:dp7646574930915576] 
+		\draw  [fill={rgb, 255:red, 227; green, 227; blue, 227 }  ,fill opacity=1 ][line width=0.75]  (0,25) .. controls (0,11.19) and (11.19,0) .. (25,0) .. controls (38.81,0) and (50,11.19) .. (50,25) .. controls (50,38.81) and (38.81,50) .. (25,50) .. controls (11.19,50) and (0,38.81) .. (0,25) -- cycle ;
+		%Straight Lines [id:da1548878979479026] 
+		\draw [line width=0.75]    (50,25) -- (100,50) ;
+		%Shape: Rectangle [id:dp6888034447692613] 
+		\draw  [line width=0.75]  (100.5,40) -- (159.5,40) -- (159.5,80) -- (100.5,80) -- cycle ;
+		%Shape: Circle [id:dp8228896109607134] 
+		\draw  [line width=0.75]  (0,95) .. controls (0,81.19) and (11.19,70) .. (25,70) .. controls (38.81,70) and (50,81.19) .. (50,95) .. controls (50,108.81) and (38.81,120) .. (25,120) .. controls (11.19,120) and (0,108.81) .. (0,95) -- cycle ;
+		%Straight Lines [id:da1560297336018157] 
+		\draw [line width=0.75]    (50,95) -- (100,70) ;
+		%Straight Lines [id:da9104270628621394] 
+		\draw [line width=0.75]    (159,61) -- (219,61) ;
+		%Shape: Circle [id:dp03169773639378193] 
+		\draw  [line width=0.75]  (219,61) .. controls (219,47.19) and (230.19,36) .. (244,36) .. controls (257.81,36) and (269,47.19) .. (269,61) .. controls (269,74.81) and (257.81,86) .. (244,86) .. controls (230.19,86) and (219,74.81) .. (219,61) -- cycle ;
+
+		% Text Node
+		\draw (15,12.9) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$F$};
+		% Text Node
+		\draw (102,48) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$\text{PNM}$};
+		% Text Node
+		\draw (17,89) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$\rvx$};
+		% Text Node
+		\draw (234,53) node [anchor=north west][inner sep=0.75pt]  [font=\huge]  {$\rvq$};
+
+
+		\end{tikzpicture}}
+
+		\vspace{3em}
+
+
+		\href{https://github.com/probabilistic-numerics/probnum/}{\includegraphics[scale=0.3]{figures/probnum_logo_text.png}}
+
+	\end{columns}
+
+\end{frame}
+
+\section{Case Study}
+
+\begin{frame}\frametitle{Case Study: ODE Filters}
+	\framesubtitle{Solving ODEs with Uncertainty Estimation \cite{Schober2019,Bosch2021}.}
+
+	\emph{Problem:} Lotka-Volterra equations (first-order, non-linear ODE)
+
+	\begin{center}
+		\includegraphics[width=0.75\textwidth]{figures/lotka-volterra-uncertainty.png}
+	\end{center}
+
+\end{frame}
+
+\begin{frame}\frametitle{Case Study: ODE Filters}
+	\framesubtitle{Adaptive step-size selection \cite{Schober2019,Bosch2021}.}
+
+	\emph{Problem:} Lotka-Volterra equations (first-order, non-linear ODE)
+
+	\begin{center}
+		\includegraphics[width=0.75\textwidth]{figures/lotka-volterra-step-size.png}
+	\end{center}
+
+\end{frame}
+
+\section{Conclusion}
+
+\blackslidetext{
+	\frametitle{Summary}
+
+
+	\makebox[\linewidth]{\color{TUgray}{\rule{\textwidth}{2pt}}}
+	
+	\begin{columns}[totalwidth=\textwidth]
+	
+	\column{.25\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/probnum_logo_light_text.png}
+		
+	\column{.7\textwidth}
+	\vspace{1em}
+
+	\begin{itemize}
+		\item \textit{Solve} numerical problems.
+		\item \textit{Quantify} uncertainty in computation.
+		\item \textit{Compose} custom probabilistic numerical methods.
+	\end{itemize}
+
+	\vspace{1em}
+	\end{columns}
+	
+	\makebox[\linewidth]{\color{TUgray}{\rule{\textwidth}{2pt}}}
+
+	\vspace{1.5em}
+	{\def\arraystretch{1.5}\tabcolsep=0.5em
+	\begin{tabular}{r c m{9cm}}
+	\textbf{PyPI}&	\includegraphics[width=.03\textwidth]{figures/pypi.png}	&	{\small \colorbox{lgra}{\texttt{\textcolor{black}{pip install probnum}}}}\\
+	\textbf{GitHub}&	\includegraphics[width=.03\textwidth]{figures/github-icon.png}	&	{\small \url{https://github.com/probabilistic-numerics/probnum}}\\
+	\textbf{Documentation}	&	\includegraphics[width=.03\textwidth]{figures/readthedocs.png}	&	{\small \url{https://probnum.readthedocs.io}}\\
+	\textbf{Tutorials}	&	\includegraphics[width=.03\textwidth]{figures/jupyter.png}	&	{\small \url{https://probnum.readthedocs.io/en/latest/tutorials.html}}\\
+	\end{tabular}}
+
+	\vspace{3.3em}
+
+	\whiteribbon{\centering Questions or Feedback?}
+
+}
+
+% References
+\newcounter{references}
+\setcounter{references}{\value{framenumber}} % Adjust frame counter to not include references
+
+\begin{frame}[allowframebreaks]{References}
+	\bibliographystyle{unsrtnat}
+	\bibliography{references}
+\end{frame}
+
+\setcounter{framenumber}{\value{references}}
+
+\end{document}
