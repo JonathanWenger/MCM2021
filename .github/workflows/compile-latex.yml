@@ -16,7 +16,6 @@ jobs:
       - name: Compile documents and figures
         uses: xu-cheng/latex-action@v2
         with:
-          working_directory: .
           root_file: |
             main.tex
           latexmk_shell_escape: true
