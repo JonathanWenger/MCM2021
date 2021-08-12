@@ -25,8 +25,9 @@ data/
 .*.lb
 
 ## Ignore generated documents and plot files
-*.pdf
+#*.pdf
 *.ps
+main.pdf
 
 ## Intermediate documents:
 *.dvi
