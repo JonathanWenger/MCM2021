@@ -420,7 +420,7 @@
 	\framesubtitle{Solving ODEs with Uncertainty Estimation \cite{Schober2019,Bosch2021}.}
 
 	\begin{center}
-		\url{http://www.probabilistic-numerics.org/en/latest/tutorials.html}
+		\url{https://probnum.readthedocs.io/en/latest/tutorials.html}
 	\end{center}
 
 	\begin{center}
@@ -434,20 +434,39 @@
 \blackslidetext{
 	\frametitle{Summary}
 
-	\textbf{PN Methods - An Algorithmic View}
+
+	\makebox[\linewidth]{\color{TUgray}{\rule{\textwidth}{2pt}}}
+	
+	\begin{columns}[totalwidth=\textwidth]
+	
+	\column{.25\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/probnum_logo_light_text.png}
+		
+	\column{.7\textwidth}
+	\vspace{1em}
+
 	\begin{itemize}
-		\item implementing PN methods forces being precise about concepts
-		\item abstract implementation surprisingly hard to define
-		\item components of a PN method
-		      \begin{itemize}
-			      \item prior
-			      \item policy
-			      \item action and observation
-			      \item posterior inference
-			      \item stopping criterion
-			      \item hyperparameter optimization
-		      \end{itemize}
+		\item \textit{Solve} numerical problems.
+		\item \textit{Quantify} uncertainty in computation.
+		\item \textit{Compose} custom probabilistic numerical methods.
 	\end{itemize}
+
+	\vspace{1em}
+	\end{columns}
+	
+	\makebox[\linewidth]{\color{TUgray}{\rule{\textwidth}{2pt}}}
+
+	\vspace{1.5em}
+	{\def\arraystretch{1.5}\tabcolsep=0.5em
+	\begin{tabular}{r c m{9cm}}
+	\textbf{PyPI}&	\includegraphics[width=.03\textwidth]{figures/pypi.png}	&	{\small \colorbox{lgra}{\texttt{\textcolor{black}{pip install probnum}}}}\\
+	\textbf{GitHub}&	\includegraphics[width=.03\textwidth]{figures/github-icon.png}	&	{\small \url{https://github.com/probabilistic-numerics/probnum}}\\
+	\textbf{Documentation}	&	\includegraphics[width=.03\textwidth]{figures/readthedocs.png}	&	{\small \url{https://probnum.readthedocs.io}}\\
+	\textbf{Tutorials}	&	\includegraphics[width=.03\textwidth]{figures/jupyter.png}	&	{\small \url{https://probnum.readthedocs.io/en/latest/tutorials.html}}\\
+	\end{tabular}}
+
+	\vspace{3.3em}
 
 	\whiteribbon{\centering Questions or Feedback?}
 
