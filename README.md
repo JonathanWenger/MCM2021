@@ -4,7 +4,7 @@ My talk at [MCM2021](https://www.uni-mannheim.de/mcm-2021/) on ProbNum.
 
 ## Talk
 
-You can view the compiled [`main.pdf`](https://github.com/JonathanWenger/MCM2021/blob/compiled/talk/main.pdf) in the `compiled` branch of the GitHub repository.
+You can view the compiled [`main.pdf`](https://github.com/JonathanWenger/MCM2021/blob/compiled/talk.pdf) in the `compiled` branch of the GitHub repository.
 
 ### LaTeX Compilation
 
