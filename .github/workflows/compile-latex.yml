@@ -16,6 +16,7 @@ jobs:
       - name: Compile documents and figures
         uses: xu-cheng/latex-action@v2
         with:
+          working_directory: talk
           root_file: |
             main.tex
           latexmk_shell_escape: true
@@ -32,5 +33,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: compiled # The branch the action should deploy to.
-          folder: . # The folder the action should deploy.
-          target-folder: .
+          folder: talk # The folder the action should deploy.
+          target-folder: talk

@@ -27,7 +27,7 @@ data/
 ## Ignore generated documents and plot files
 #*.pdf
 *.ps
-main.pdf
+**/talk/**/*.pdf
 
 ## Intermediate documents:
 *.dvi
@@ -37,8 +37,8 @@ main.pdf
 # *.ps
 # *.eps
 **/figures/external/*
-!**/figures/*.pdf
-!**/assets/*.pdf
+!**/talk/**/figures/*.pdf
+!**/talk/**/assets/*.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
