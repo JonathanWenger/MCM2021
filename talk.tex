@@ -143,7 +143,7 @@
 
 \end{frame}
 
-\begin{frame}\frametitle{An Example PN Method}
+\begin{frame}\frametitle{An Example Problem}
 	\framesubtitle{1D Noisy Quadratic Optimization}
 
 	\emph{Problem:}
@@ -256,6 +256,10 @@
 
 	\end{columns}
 
+	\vspace{1.5em}
+
+	\ribbon{\centering Modular and composable \textit{implementations of PN methods}?}
+
 \end{frame}
 
 \section{Software for PN}
@@ -269,38 +273,43 @@
 \end{frame}
 
 \begin{frame}\frametitle{ProbNum}
-	\framesubtitle{}
+	\framesubtitle{Probabilistic Numerics in Python.}
 
-	\begin{columns}[totalwidth=\textwidth]
-		\column{.6\textwidth}
+	\begin{columns}
+		\column{.66\textwidth}
 
-		\emph{Problem}
+		\emph{\bf ProbNum} is a Python library for solving numerical problems.
+
+		{\small
 		\begin{itemize}
-			\item few implementations of probabilistic numerical methods
-			\item not enough convincing applications available
+			\item \emph{Linear solvers}: $\mA \vx = \vb$ 
+			\item \emph{ODE solvers}: $\dot{\vy}(t) = f(\vy(t), t)$
+			\item \emph{Integral solvers (quadrature)}: $F= \int f(x) p(x) d\, x$
+			\item Filters and smoothers
+			\item Random variables and random processes
+			\item Linear operators $\vv \mapsto \mA \vv$
 		\end{itemize}
-
-		\emph{Idea}
-		\begin{itemize}
-			\item lab / community-wide software framework for PN
-		\end{itemize}
+		}
 
 		\emph{Goals}
 		\begin{itemize}
-			\item \textit{promote PN research} via a useful code base
-			\item \textit{simplify} the \textit{implementation} of new PN methods
-			\item \textit{demonstrate} the \textit{use cases} of PN
-			\item provide \textit{teaching} tools
+			\item expedite the \textit{implementation} of new PN methods
+			\item make PN methods available for \textit{applications}
+			\item demonstrate the \textit{use cases} of PN
 		\end{itemize}
 
-		\column{.3\textwidth}
+		\column{.33\textwidth}
+
+		{
 		\centering
-		\vspace{-3ex}
-		\href{https://github.com/probabilistic-numerics/probnum/}{\includegraphics[scale=0.3]{figures/probnum_logo_text.png}}
-		\includegraphics[width=\textwidth]{figures/probnum_contributors.png}
-		%\vspace{-4ex}
+
+		\href{https://github.com/probabilistic-numerics/probnum/}{\includegraphics[scale=0.35]{figures/probnum_logo_text.png}}
+		}
+
+		\vspace{0.5em}
+
 		\begin{center}
-			\begin{tikzpicture}[yscale=.6]
+			\begin{tikzpicture}[yscale=.5]
 				%	    \filldraw[black] (2,0) rectangle (4,2);
 				%	    \filldraw[gray] (0,2) rectangle (2,4);
 				%	    \filldraw[gray] (2,2) rectangle (4,4);
@@ -314,25 +323,30 @@
 				\node[align=center] at (1,1) {Differential\\ Equations};
 			\end{tikzpicture}
 		\end{center}
+
+		\vspace{0.5em}
+
+		\includegraphics[width=0.8\textwidth]{figures/probnum-contributors.png}
+
 	\end{columns}
-	\vspace{1em}
-	\ribbon{ProbNum on GitHub: {\small \url{https://github.com/probabilistic-numerics/probnum/}}}
+
+	\vspace{2em}
+	\ribbon{\centering \url{https://github.com/probabilistic-numerics/probnum/}}
 
 \end{frame}
 
 \subsection{Design Principles}
 
-\begin{frame}[fragile]\frametitle{Design Principles of ProbNum}
-	\framesubtitle{}
+\begin{frame}[fragile]\frametitle{Design Principles}
+	\framesubtitle{ProbNum: Learn to Approximate. Approximate to Learn}
 
 	\begin{columns}[totalwidth=\textwidth]
 		\column{.7\textwidth}
 
-		\emph{In- and Outputs:} PN Methods take random variables / processes as inputs and return random
-		variables / processes as outputs.
+		\emph{In- and Outputs:} Random variables / processes.
 		\vspace{2ex}
 
-		\emph{Interface Design:} Drop-in replacement for NumPy / SciPy
+		\emph{Interface:} Drop-in replacement for NumPy / SciPy
 
 		\begin{python}
 		# Solve using NumPy
@@ -342,7 +356,7 @@
 		x_rv, _, _, info = pn.linalg.problinsolve(A, b)\end{python}
 		\vspace{2ex}
 
-		\emph{Implementation:} Compositionality enables custom PN Methods
+		\emph{Implementation:} Modularity enables custom PN Methods
 
 		\begin{python}
 		# Construct custom solver
@@ -366,7 +380,7 @@
 \section{Case Study}
 
 \begin{frame}\frametitle{Case Study: ODE Filters}
-	\framesubtitle{Solving ODEs with Uncertainty Estimation}
+	\framesubtitle{Solving ODEs with Uncertainty Estimation.}
 
 	\begin{center}
 		\url{http://www.probabilistic-numerics.org/en/latest/tutorials.html}
